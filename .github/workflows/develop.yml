@@ -56,7 +56,7 @@ jobs:
         echo $CONNECTED_APP_CLIENT_SECRET  | sed 's/./& /g'
         echo $TEST_SECRET22  | sed 's/./& /g'
         ls -la
-        cd ..
+        cd ../git-actions-test1
         ls -la
         ./deploy.sh
 
