@@ -1,0 +1,65 @@
+name: Reusable workflow example
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+
+jobs:
+  job1:
+    runs-on:  ubuntu-latest
+    environment:
+      name:  ${{ inputs.environment }}
+    env:
+      APP_NAME: ${{ vars.APP_NAME }}
+      ENV_NAME: ${{ vars.ENV_NAME }}
+      DEPLOY_TARGET: ${{ vars.DEPLOY_TARGET }}
+      DEPLOY_TARGET_TYPE: ${{ vars.DEPLOY_TARGET_TYPE }}
+      CONNECTED_APP_CLIENT_ID: ${{ secrets.CONNECTED_APP_CLIENT_ID }}
+      CONNECTED_APP_CLIENT_SECRET: ${{ secrets.CONNECTED_APP_CLIENT_SECRET }}
+      TEST_SECRET22: ${{ secrets.TEST_SECRET22 }}
+
+      
+    
+    steps:
+    - name: Set up secret file
+      run: |
+        echo "Step1"
+        echo $APP_NAME
+        echo $ENV_NAME
+        echo $DEPLOY_TARGET
+        echo $DEPLOY_TARGET_TYPE
+        echo $CONNECTED_APP_CLIENT_ID 
+        echo $CONNECTED_APP_CLIENT_SECRET 
+        echo $TEST_SECRET22 
+
+  job2:
+    needs: [  job1 ]
+    runs-on:  ubuntu-latest
+    #runs-on: rhel8
+    env:
+      APP_NAME: ${{ vars.APP_NAME }}
+      ENV_NAME: ${{ vars.ENV_NAME }}
+      DEPLOY_TARGET: ${{ vars.DEPLOY_TARGET }}
+      DEPLOY_TARGET_TYPE: ${{ vars.DEPLOY_TARGET_TYPE }}
+      CONNECTED_APP_CLIENT_ID: ${{ secrets.CONNECTED_APP_CLIENT_ID }}
+      CONNECTED_APP_CLIENT_SECRET: ${{ secrets.CONNECTED_APP_CLIENT_SECRET }}
+      TEST_SECRET22: ${{ secrets.TEST_SECRET22 }}
+    environment:
+      name:  ${{ inputs.environment }}
+    steps:
+    - name: Step 2
+      run: |
+        echo "Step2"
+        echo $APP_NAME
+        echo $ENV_NAME
+        echo $DEPLOY_TARGET
+        echo $DEPLOY_TARGET_TYPE
+        echo $CONNECTED_APP_CLIENT_ID 
+        echo $CONNECTED_APP_CLIENT_SECRET 
+        echo $TEST_SECRET22 
+
+
+
