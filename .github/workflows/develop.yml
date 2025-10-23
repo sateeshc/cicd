@@ -58,6 +58,8 @@ jobs:
         ls -la
         cd ..
         ls -la
+        cd git-actions-test1
+        ls -la
         ./deploy.sh
 
 
