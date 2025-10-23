@@ -47,6 +47,8 @@ jobs:
     environment:
       name:  ${{ inputs.environment-name }}
     steps:
+    - name: Git Checkout
+      uses: actions/checkout@v4
     - name: Step 2
       run: |
         echo "Step2"
