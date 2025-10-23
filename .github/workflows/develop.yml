@@ -64,6 +64,7 @@ jobs:
         ls -la
         cd git-actions-test1
         ls -la
+        chmod +x deploy.sh
         ./deploy.sh
 
 
