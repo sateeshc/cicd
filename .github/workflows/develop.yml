@@ -41,7 +41,7 @@ jobs:
       DEPLOY_TARGET_TYPE: ${{ vars.DEPLOY_TARGET_TYPE }}
       CONNECTED_APP_CLIENT_ID: ${{ needs.Set-ENV.outputs.connected-app-client-id }}
       CONNECTED_APP_CLIENT_SECRET: ${{ needs.Set-ENV.outputs.connected-app-client-secret }}
-      TEST_SECRET22: ${{ needs.Set-ENV.outputs.test-secret22 }}
+      TEST_SECRET22: ${{ secrets.TEST_SECRET22 }}
     environment:
       name:  ${{ inputs.environment-name }}
     steps:
