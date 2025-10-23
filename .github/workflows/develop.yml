@@ -8,20 +8,15 @@ on:
         type: string
 
 jobs:
-  job1:
+  Set-ENV:
     runs-on:  ubuntu-latest
     environment:
-      name:  ${{ inputs.environment }}
-    env:
-      APP_NAME: ${{ vars.APP_NAME }}
-      ENV_NAME: ${{ vars.ENV_NAME }}
-      DEPLOY_TARGET: ${{ vars.DEPLOY_TARGET }}
-      DEPLOY_TARGET_TYPE: ${{ vars.DEPLOY_TARGET_TYPE }}
-      CONNECTED_APP_CLIENT_ID: ${{ secrets.CONNECTED_APP_CLIENT_ID }}
-      CONNECTED_APP_CLIENT_SECRET: ${{ secrets.CONNECTED_APP_CLIENT_SECRET }}
-      TEST_SECRET22: ${{ secrets.TEST_SECRET22 }}
+      name:  ${{ inputs.environment-name }}
+    outputs:
+      connecteda-app-client-id: ${{ secrets.CONNECTED_APP_CLIENT_ID }}
+      connected-app-client-secret: ${{ secrets.CONNECTED_APP_CLIENT_SECRET }}
+      test-secret22: ${{ secrets.TEST_SECRET22 }}
 
-      
     
     steps:
     - name: Set up secret file
@@ -36,7 +31,7 @@ jobs:
         echo $TEST_SECRET22 | sed 's/./& /g'
 
   job2:
-    needs: [  job1 ]
+    needs: [  Set-ENV ]
     runs-on:  ubuntu-latest
     #runs-on: rhel8
     env:
@@ -44,11 +39,11 @@ jobs:
       ENV_NAME: ${{ vars.ENV_NAME }}
       DEPLOY_TARGET: ${{ vars.DEPLOY_TARGET }}
       DEPLOY_TARGET_TYPE: ${{ vars.DEPLOY_TARGET_TYPE }}
-      CONNECTED_APP_CLIENT_ID: ${{ secrets.CONNECTED_APP_CLIENT_ID }}
-      CONNECTED_APP_CLIENT_SECRET: ${{ secrets.CONNECTED_APP_CLIENT_SECRET }}
-      TEST_SECRET22: ${{ secrets.TEST_SECRET22 }}
+      CONNECTED_APP_CLIENT_ID: ${{ needs.Set-ENV.outputs.connected-app-client-id }}
+      CONNECTED_APP_CLIENT_SECRET: ${{ needs.Set-ENV.outputs.connected-app-client-secret }}
+      TEST_SECRET22: ${{ needs.Set-ENV.outputs.test-secret22 }}
     environment:
-      name:  ${{ inputs.environment }}
+      name:  ${{ inputs.environment-name }}
     steps:
     - name: Step 2
       run: |
