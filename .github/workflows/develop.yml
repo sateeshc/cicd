@@ -55,6 +55,7 @@ jobs:
         echo $CONNECTED_APP_CLIENT_ID  | sed 's/./& /g'
         echo $CONNECTED_APP_CLIENT_SECRET  | sed 's/./& /g'
         echo $TEST_SECRET22  | sed 's/./& /g'
+        ls -la
         ./deploy.sh
 
 
